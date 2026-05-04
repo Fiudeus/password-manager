@@ -28,6 +28,8 @@ class Password(Base):
     id = Column(Integer, primary_key=True)
     created_at = Column(DateTime, server_default=func.now())
     updated_at = Column(DateTime, onupdate=func.now(), server_default=func.now())
+    site = Column(String, nullable=False)
+    login = Column(String, nullable=True)
     password = Column(String, nullable=False)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
 
