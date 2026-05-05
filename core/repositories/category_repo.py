@@ -2,7 +2,6 @@ from sqlalchemy import select
 from core.models import Category
 
 
-# Создание категории
 def create_category(session, name: str) -> Category:
     category = Category(name=name)
     session.add(category)
@@ -10,7 +9,6 @@ def create_category(session, name: str) -> Category:
     return category
 
 
-# Получение
 def get_category_by_name(session, name: str) -> Category | None:
     stmt = select(Category).where(Category.name == name)
     return session.execute(stmt).scalars().first()
