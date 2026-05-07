@@ -14,6 +14,7 @@ class User(Base):
     id = Column(Integer, primary_key=True)
     username = Column(String, unique=True, nullable=False)
     master_password = Column(String, nullable=False)
+    salt = Column(String, nullable=False)
 
     passwords = relationship("Password", back_populates="user", cascade="all, delete-orphan")
 
@@ -34,12 +35,15 @@ class Password(Base):
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
 
     user = relationship("User", back_populates="passwords")
-    history = relationship("PasswordHistory", back_populates="password", order_by="PasswordHistory.changed_at.desc()")
+    history = relationship(
+        "PasswordHistory", back_populates="password",
+        order_by="PasswordHistory.changed_at.desc()", cascade="all, delete-orphan"
+    )
     categories = relationship("Category", secondary="category_passwords", back_populates="passwords")
 
 
     def __repr__(self):
-        return f"Password(id={self.id}, created_at={self.created_at}, updated_at={self.updated_at} password={self.password}, user_id={self.user_id})"
+        return f"Password(id={self.id}, created_at={self.created_at}, updated_at={self.updated_at} password=********, user_id={self.user_id})"
 
 Index("idx_passwords_user_id", Password.user_id)
 
@@ -53,7 +57,7 @@ class PasswordHistory(Base):
     old_password = Column(String, nullable=False)
     changed_at = Column(DateTime, server_default=func.now())
 
-    password = relationship("Password", back_populates="history", cascade="all, delete-orphan")
+    password = relationship("Password", back_populates="history")
 
     def __repr__(self):
         return f"PasswordHistory(id={self.id}, password_id={self.password_id}, old_password={self.old_password}, changed_at={self.changed_at})"
