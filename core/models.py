@@ -43,7 +43,7 @@ class Password(Base):
 
 
     def __repr__(self):
-        return f"Password(id={self.id}, created_at={self.created_at}, updated_at={self.updated_at} password={self.password}, user_id={self.user_id})"
+        return f"Password(id={self.id}, created_at={self.created_at}, updated_at={self.updated_at} password=********, user_id={self.user_id})"
 
 Index("idx_passwords_user_id", Password.user_id)
 

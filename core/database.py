@@ -9,4 +9,4 @@ class Base(DeclarativeBase):
 
 engine = create_engine('sqlite:///db.sqlite')
 
-SessionLocal = sessionmaker(bind=engine)
+SessionLocal = sessionmaker(bind=engine, expire_on_commit=False)
