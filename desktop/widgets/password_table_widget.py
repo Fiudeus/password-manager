@@ -28,6 +28,7 @@ class PasswordTableWidget(QWidget):
 
     edit_requested = Signal(int)
     delete_requested = Signal(int)
+    history_requested = Signal(int)
 
     def __init__(self):
         super().__init__()
@@ -120,7 +121,16 @@ class PasswordTableWidget(QWidget):
         self.table.setShowGrid(False)
         self.table.setAlternatingRowColors(True)
 
+        self.table.setSortingEnabled(True)
+        self.table.setSelectionMode(
+            QAbstractItemView.SingleSelection
+        )
+        self.table.horizontalHeader().setSortIndicatorShown(False)
+        self.table.horizontalHeader().setSectionsClickable(True)
+
     def load_data(self, passwords: list[dict]):
+        self.table.setSortingEnabled(False)
+
         self.table.clearContents()
 
         self.table.setRowCount(len(passwords))
@@ -167,6 +177,17 @@ class PasswordTableWidget(QWidget):
 
             copy_password_action = menu.addAction(
                 "Копировать пароль"
+            )
+
+            menu.addSeparator()
+
+            history_action = menu.addAction(
+                "История паролей"
+            )
+
+            history_action.triggered.connect(
+                lambda checked=False, pid=password_data["id"]:
+                self.history_requested.emit(pid)
             )
 
             menu.addSeparator()
@@ -229,7 +250,9 @@ class PasswordTableWidget(QWidget):
                 row,
                 self.COL_CREATED,
                 QTableWidgetItem(
-                    str(password_data["created_at"])
+                    password_data["created_at"].strftime(
+                        "%Y-%m-%d %H:%M"
+                    )
                 )
             )
 
@@ -263,7 +286,9 @@ class PasswordTableWidget(QWidget):
                 row,
                 self.COL_UPDATED,
                 QTableWidgetItem(
-                    str(password_data["updated_at"])
+                    password_data["updated_at"].strftime(
+                        "%Y-%m-%d %H:%M"
+                    )
                 )
             )
 
@@ -279,6 +304,7 @@ class PasswordTableWidget(QWidget):
                 QTableWidgetItem(str(password_data["id"]))
             )
 
+        self.table.setSortingEnabled(True)
 
 
     def get_selected_password_id(self) -> int | None:

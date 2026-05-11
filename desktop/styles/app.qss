@@ -199,3 +199,10 @@ QLabel#statsValue {
     color: #111827;
     font-size: 16px;
     }
+
+QHeaderView::up-arrow,
+QHeaderView::down-arrow {
+    image: none;
+    width: 0px;
+    height: 0px;
+}
