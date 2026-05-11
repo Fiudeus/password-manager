@@ -15,6 +15,7 @@ from desktop.widgets.stats_widget import StatsWidget
 from desktop.dialogs.add_password_dialog import AddPasswordDialog
 from desktop.dialogs.edit_password_dialog import EditPasswordDialog
 from desktop.dialogs.create_category_dialog import CreateCategoryDialog
+from desktop.dialogs.password_history_dialog import PasswordHistoryDialog
 from core.services import password_service, category_service
 
 
@@ -136,6 +137,10 @@ class MainWindow(QMainWindow):
 
         self.password_table.edit_requested.connect(
             self.open_edit_dialog
+        )
+
+        self.password_table.history_requested.connect(
+            self.open_password_history
         )
 
     def load_passwords(self):
@@ -394,3 +399,21 @@ class MainWindow(QMainWindow):
                 "Ошибка",
                 str(e)
             )
+
+    def open_password_history(self, password_id):
+
+        password_data = password_service.get_password(
+            self.session,
+            password_id,
+            self.key
+        )
+
+        if not password_data:
+            return
+
+        dialog = PasswordHistoryDialog(
+            password_data["history"],
+            password_data["site"]
+        )
+
+        dialog.exec()

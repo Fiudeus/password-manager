@@ -166,3 +166,4 @@ def sync_password_categories(
             password_obj,
             category_name
         )
+
