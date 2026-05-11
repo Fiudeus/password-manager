@@ -24,11 +24,13 @@ def get_passwords(session, user_id: int, key: bytes):
         decrypted = decrypt_password(p.password, key)
 
         result.append({
+            "created_at": p.created_at,
             "id": p.id,
             "site": p.site,
             "login": p.login,
             "password": decrypted,
-            "categories": [c.name for c in p.categories]
+            "categories": [c.name for c in p.categories],
+            "updated_at": p.updated_at
         })
 
     return result
@@ -54,6 +56,12 @@ def get_password(session, password_id: int, key: bytes):
         ]
     }
 
+def get_password_by_id(session, password_id: int):
+
+    return password_repo.get_password_by_id(
+        session,
+        password_id
+    )
 
 # Старый пароль сохраняем в историю до обновления
 def change_password(session, password_obj: Password, *, new_password: str, key: bytes):
@@ -88,6 +96,22 @@ def delete_password(session, password_obj: Password):
     return password_repo.delete_password(session, password_obj)
 
 
+def delete_password_by_id(session, password_id: int):
+
+    password_obj = password_repo.get_password_by_id(
+        session,
+        password_id
+    )
+
+    if not password_obj:
+        raise ValueError("Password not found")
+
+    password_repo.delete_password(
+        session,
+        password_obj
+    )
+
+
 # Создаём категорию, если её ещё нет, после добавляем её к паролю
 def add_category(session, password_obj, category_name: str):
     category = category_repo.get_category_by_name(session, category_name)
@@ -108,3 +132,37 @@ def remove_category(session, password_obj, category_name: str):
         password_obj.categories.remove(category)
 
     session.flush()
+
+
+def sync_password_categories(
+    session,
+    password_obj,
+    category_names: list[str]
+):
+
+    current_names = {
+        category.name
+        for category in password_obj.categories
+    }
+
+    new_names = set(category_names)
+
+    # Удаляем старые категории
+
+    for category_name in current_names - new_names:
+
+        remove_category(
+            session,
+            password_obj,
+            category_name
+        )
+
+    # Добавляем новые категории
+
+    for category_name in new_names - current_names:
+
+        add_category(
+            session,
+            password_obj,
+            category_name
+        )

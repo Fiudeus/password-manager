@@ -27,3 +27,14 @@ def get_all_categories(session) -> list[Category]:
 def delete_category(session, category: Category) -> None:
     session.delete(category)
     session.flush()
+
+
+def rename_category(
+    session,
+    category: Category,
+    new_name: str
+) -> None:
+
+    category.name = new_name
+
+    session.flush()
