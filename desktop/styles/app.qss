@@ -1,0 +1,201 @@
+/* ===== MAIN WINDOW ===== */
+
+QMainWindow {
+    background-color: #f3f4f6;
+}
+
+
+/* ===== LISTS ===== */
+
+QListWidget {
+    background: white;
+    border: 1px solid #dcdfe3;
+    border-radius: 10px;
+    padding: 6px;
+    outline: none;
+}
+
+QListWidget::item {
+    padding: 10px;
+    border-radius: 8px;
+}
+
+QListWidget::item:hover {
+    background-color: #f0fdf4;
+}
+
+QListWidget::item:selected {
+    background-color: #dcfce7;
+    color: black;
+    border: none;
+}
+
+
+/* ===== TABLE ===== */
+
+QTableWidget {
+    background: white;
+    border: 1px solid #cfe8d2;
+    border-radius: 12px;
+    gridline-color: #e6f2e8;
+    outline: none;
+    selection-background-color: #dcfce7;
+    selection-color: black;
+}
+
+QTableCornerButton::section {
+    background: #dff5e1;
+    border: none;
+}
+
+QHeaderView {
+    background: transparent;
+}
+
+QHeaderView::section {
+    background-color: #dff5e1;
+    padding: 10px;
+    border: none;
+    border-bottom: 1px solid #cfe8d2;
+    font-weight: bold;
+}
+
+QHeaderView::section:first {
+    border-top-left-radius: 12px;
+}
+
+QHeaderView::section:last {
+    border-top-right-radius: 12px;
+}
+
+
+/* ===== INPUTS ===== */
+
+QLineEdit {
+    background: white;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    padding: 8px;
+    selection-background-color: #86efac;
+}
+
+QLineEdit:focus {
+    border: 1px solid #22c55e;
+}
+
+
+/* ===== DEFAULT BUTTONS ===== */
+
+QPushButton {
+    background-color: white;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    padding: 8px 14px;
+    outline: none;
+}
+
+QPushButton:hover {
+    background-color: #f0fdf4;
+    border: 1px solid #86efac;
+}
+
+QPushButton:pressed {
+    background-color: #dcfce7;
+}
+
+QPushButton:focus {
+    outline: none;
+}
+
+
+/* ===== PRIMARY BUTTON ===== */
+
+QPushButton#primaryButton {
+    background-color: #22c55e;
+    color: white;
+    border: none;
+    font-weight: bold;
+}
+
+QPushButton#primaryButton:hover {
+    background-color: #16a34a;
+}
+
+QPushButton#primaryButton:pressed {
+    background-color: #15803d;
+}
+
+
+/* ===== ICON BUTTONS ===== */
+
+QPushButton#iconButton {
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    padding: 0px;
+
+    min-width: 28px;
+    max-width: 28px;
+    min-height: 28px;
+    max-height: 28px;
+
+    outline: none;
+}
+
+QPushButton#iconButton:hover {
+    background-color: #f0fdf4;
+    border: none;
+}
+
+QPushButton#iconButton:pressed {
+    background-color: #dcfce7;
+    border: none;
+}
+
+QPushButton#iconButton:focus {
+    border: none;
+    outline: none;
+}
+
+
+/* ===== MENU ===== */
+
+QMenu {
+    background: white;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    padding: 4px;
+}
+
+QMenu::item {
+    padding: 8px 20px;
+    border-radius: 6px;
+}
+
+QMenu::item:selected {
+    background-color: #dcfce7;
+}
+
+
+/* ===== DIALOGS ===== */
+
+QDialog {
+    background: #f3f4f6;
+}
+
+QFrame#statsCard {
+    background: white;
+    border: 1px solid #dfe7df;
+    border-radius: 12px;
+    padding: 10px;
+}
+
+QLabel#statsTitle {
+    color: #6b7280;
+    font-size: 12px;
+}
+
+QLabel#statsValue {
+    color: #111827;
+    font-size: 16px;
+    }
